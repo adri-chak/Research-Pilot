@@ -29,9 +29,3 @@ def generate_project_idea(domain):
     response = structured_llm.invoke(prompt)
 
     return response
-
-result = generate_project_idea("Healthcare")
-
-print(result.project_name)
-print(result.description)
-print(result.difficulty)

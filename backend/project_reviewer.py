@@ -31,10 +31,3 @@ def review_project(project):
 
     return response
 
-result = review_project(
-    "AI-Powered Medical Diagnosis System"
-)
-
-print(result.strengths)
-print(result.weaknesses)
-print(result.score)
