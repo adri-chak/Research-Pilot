@@ -13,22 +13,25 @@ llm = ChatGroq(
 
 structured_llm = llm.with_structured_output(ProjectIdea)
 
-domain = "Healthcare"
+def generate_project_idea(domain):
+    prompt = f"""
+    Suggest one innovative student project in {domain}.
 
-prompt = f"""
-Suggest one innovative student project in {domain}.
+    Return ONLY valid JSON in this format:
 
-Return ONLY valid JSON in this format:
+    {{
+        "project_name": "",
+        "description": "",
+        "difficulty": ""
+    }}
+    """
 
-{{
-    "project_name": "",
-    "description": "",
-    "difficulty": ""
-}}
-"""
+    response = structured_llm.invoke(prompt)
 
-response = structured_llm.invoke(prompt)
+    return response
 
-print(response.project_name)
-print(response.description)
-print(response.difficulty)
+result = generate_project_idea("Healthcare")
+
+print(result.project_name)
+print(result.description)
+print(result.difficulty)
