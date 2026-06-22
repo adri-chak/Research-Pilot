@@ -6,6 +6,10 @@ def run_research_workflow(domain):
 
     review = review_project(idea.project_name)
 
+    if review.score < 8:
+        idea = generate_project_idea(domain)
+        review = review_project(idea.project_name)
+
     return idea, review
 
 idea, review = run_research_workflow("Cybersecurity")
