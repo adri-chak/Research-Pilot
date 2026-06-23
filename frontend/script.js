@@ -128,7 +128,7 @@ async function handleGenerate() {
 /* ── 5. API Call ─────────────────────────────────────────── */
 
 async function fetchProjectIdea(domain) {
-  const response = await fetch(`${API_BASE_URL}/generate`, {
+  const response = await fetch(`${API_BASE_URL}/research`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
