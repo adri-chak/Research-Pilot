@@ -575,7 +575,9 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1px;
+  gap: 2px;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .score-num {
@@ -591,8 +593,9 @@ main {
   font-size: 12px;
   color: var(--ink-3);
   font-weight: 500;
-  align-self: flex-end;
-  padding-bottom: 7px;
+  align-self: center;
+  padding-bottom: 0;
+  margin-top: 6px;
 }
 
 .score-badge {
