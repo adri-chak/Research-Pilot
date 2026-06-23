@@ -15,6 +15,8 @@ class ResearchState(TypedDict):
     domain: str
     idea: str
     score: int
+    strengths: str
+    weaknesses: str
     plan: list[str]
 
 
@@ -30,6 +32,8 @@ def review_node(state):
     review = review_project(state["idea"])
 
     state["score"] = review.score
+    state["strengths"] = review.strengths
+    state["weaknesses"] = review.weaknesses
 
     return state
 
@@ -63,6 +67,8 @@ if __name__ == "__main__":
             "domain": "Cybersecurity",
             "idea": "",
             "score": 0,
+            "strengths": "",
+            "weaknesses": "",
             "plan": []
         }
     )

@@ -31,6 +31,8 @@ def run_research(request: ProjectRequest):
             "domain": request.domain,
             "idea": "",
             "score": 0,
+            "strengths": "",
+            "weaknesses": "",
             "plan": []
         }
     )
