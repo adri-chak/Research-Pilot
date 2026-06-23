@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ResearchPilot — AI-powered project idea discovery for students. Powered by LangGraph and Groq LLM." />
+  <title>ResearchPilot — AI Project Discovery</title>
+
+  <!-- Google Fonts: Instrument Serif (display) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════
+       NAVIGATION
+       ════════════════════════════════ -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-mark" aria-hidden="true">✦</span>
+        <span class="logo-text">ResearchPilot</span>
+      </div>
+      <span class="nav-pill">Powered by LangGraph</span>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════
+       MAIN CONTENT
+       ════════════════════════════════ -->
+  <main>
+
+    <!-- ── Hero Section ── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <p class="hero-eyebrow">Agentic AI · Student Research Tool</p>
+      <h1 class="hero-heading" id="hero-heading">
+        Discover your next<br />
+        <em>research project</em>
+      </h1>
+      <p class="hero-desc">
+        Enter any domain and three specialised AI agents — Idea Generator, Project Reviewer,
+        and Implementation Planner — will evaluate and build you a complete project brief in seconds.
+      </p>
+    </section>
+
+    <!-- ── Input Section ── -->
+    <section class="input-section" aria-label="Project domain input">
+      <div class="input-card">
+        <label class="input-label" for="domain-input">Research Domain</label>
+        <div class="input-row">
+          <input
+            type="text"
+            id="domain-input"
+            class="domain-input"
+            placeholder="e.g. Cybersecurity, Medical AI, Education…"
+            autocomplete="off"
+            spellcheck="false"
+            aria-describedby="input-hint-text"
+          />
+          <button class="generate-btn" id="generate-btn" aria-label="Generate project idea">
+            <span class="btn-label">Generate</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <!-- Quick-select chips -->
+        <div class="hint-chips" id="input-hint-text" role="list" aria-label="Quick domain suggestions">
+          <button class="chip" data-value="Cybersecurity" role="listitem">Cybersecurity</button>
+          <button class="chip" data-value="Medical AI" role="listitem">Medical AI</button>
+          <button class="chip" data-value="Education" role="listitem">Education</button>
+          <button class="chip" data-value="Robotics" role="listitem">Robotics</button>
+          <button class="chip" data-value="Climate Tech" role="listitem">Climate Tech</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Loading State ── -->
+    <section
+      class="loading-section"
+      id="loading-section"
+      aria-live="polite"
+      aria-label="Agent pipeline status"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <p class="loading-title">Running agent pipeline…</p>
+
+        <ol class="agent-list" aria-label="Agent stages">
+          <li class="agent-step" id="agent-0" aria-label="Idea Generator Agent">
+            <div class="agent-dot" aria-hidden="true"></div>
+            <div class="agent-meta">
+              <span class="agent-name">Idea Generator Agent</span>
+              <span class="agent-status">Brainstorming project ideas for your domain…</span>
+            </div>
+          </li>
+          <li class="agent-step" id="agent-1" aria-label="Project Reviewer Agent">
+            <div class="agent-dot" aria-hidden="true"></div>
+            <div class="agent-meta">
+              <span class="agent-name">Project Reviewer Agent</span>
+              <span class="agent-status">Evaluating strengths and weaknesses…</span>
+            </div>
+          </li>
+          <li class="agent-step" id="agent-2" aria-label="Implementation Planner Agent">
+            <div class="agent-dot" aria-hidden="true"></div>
+            <div class="agent-meta">
+              <span class="agent-name">Implementation Planner Agent</span>
+              <span class="agent-status">Building your step-by-step roadmap…</span>
+            </div>
+          </li>
+        </ol>
+
+        <p class="loading-footnote">LangGraph is orchestrating your multi-agent workflow</p>
+      </div>
+    </section>
+
+    <!-- ── Error Banner ── -->
+    <div
+      class="error-banner"
+      id="error-banner"
+      role="alert"
+      aria-hidden="true"
+    >
+      <span class="error-icon" aria-hidden="true">⚠</span>
+      <p class="error-text" id="error-text">Something went wrong. Please try again.</p>
+    </div>
+
+    <!-- ── Results Section ── -->
+    <section
+      class="results-section"
+      id="results-section"
+      aria-label="Generated project results"
+      aria-hidden="true"
+    >
+      <!-- Results header bar -->
+      <div class="results-header">
+        <span class="results-domain-tag" id="results-domain-tag"></span>
+        <span class="results-meta">Generated by 3 AI agents via LangGraph</span>
+      </div>
+
+      <!-- Results grid -->
+      <div class="results-grid">
+
+        <!-- 1. Project Idea Card (full width) -->
+        <article class="card card-idea" aria-label="Project idea">
+          <p class="card-eyebrow">Project Idea</p>
+          <h2 class="idea-title" id="idea-title"></h2>
+        </article>
+
+        <!-- 2. Score Card -->
+        <article class="card card-score" aria-label="Quality score">
+          <p class="card-eyebrow">Quality Score</p>
+
+          <!-- SVG ring progress indicator -->
+          <div class="score-ring-wrap">
+            <svg
+              class="score-ring"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <circle class="ring-bg" cx="50" cy="50" r="40" />
+              <circle class="ring-progress" id="ring-progress" cx="50" cy="50" r="40" />
+            </svg>
+            <div class="score-display" aria-live="polite">
+              <span class="score-num" id="score-num">0</span>
+              <span class="score-denom">/10</span>
+            </div>
+          </div>
+
+          <span class="score-badge" id="score-badge"></span>
+        </article>
+
+        <!-- 3. Strengths Card -->
+        <article class="card card-strengths" aria-label="Project strengths">
+          <p class="card-eyebrow card-eyebrow--green">✓ Strengths</p>
+          <p class="card-body" id="strengths-body"></p>
+        </article>
+
+        <!-- 4. Weaknesses Card (full width) -->
+        <article class="card card-weaknesses" aria-label="Project weaknesses">
+          <p class="card-eyebrow card-eyebrow--amber">⚠ Weaknesses</p>
+          <p class="card-body" id="weaknesses-body"></p>
+        </article>
+
+        <!-- 5. Implementation Plan Card (full width) -->
+        <article class="card card-plan" aria-label="Implementation plan">
+          <p class="card-eyebrow">Implementation Plan</p>
+          <p class="plan-subtitle">Your step-by-step project roadmap</p>
+          <ol class="plan-timeline" id="plan-timeline" aria-label="Project steps"></ol>
+        </article>
+
+      </div><!-- /results-grid -->
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="footer" role="contentinfo">
+    <p>ResearchPilot · FastAPI · LangChain · LangGraph · Groq LLM</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
