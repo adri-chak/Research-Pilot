@@ -21,8 +21,7 @@
      - Railway:      'https://your-app.up.railway.app'
      - Render:       'https://your-app.onrender.com'
    ─────────────────────────────────────────────────────────── */
-const API_BASE_URL = 'http://localhost:8000';
-
+const API_BASE_URL = "https://research-pilot-jhb9.onrender.com";
 
 /* ── 2. DOM References ───────────────────────────────────── */
 const domainInput     = document.getElementById('domain-input');
