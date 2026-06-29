@@ -43,13 +43,12 @@ const weaknessesBody   = document.getElementById('weaknesses-body');
 const planTimeline     = document.getElementById('plan-timeline');
 
 // Literature Review card elements
-const litSummary = document.getElementById("literature-summary");
-const litExistingWork = document.getElementById("existing-work");
-const litLimitations = document.getElementById("limitations");
-
+const litSummary = document.getElementById("lit-summary");
+const litExistingWork = document.getElementById("lit-existing-work");
+const litLimitations = document.getElementById("lit-limitations");
 
 // Future Directions card element
-const futureList = document.getElementById("future-directions");
+const futureList = document.getElementById("future-list");
 
 // SVG score ring: circumference = 2π × r = 2π × 40 ≈ 251.33
 const RING_CIRCUMFERENCE = 2 * Math.PI * 40;
