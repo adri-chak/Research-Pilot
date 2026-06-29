@@ -23,6 +23,7 @@
    ─────────────────────────────────────────────────────────── */
 const API_BASE_URL = "https://research-pilot-jhb9.onrender.com";
 
+
 /* ── 2. DOM References ───────────────────────────────────── */
 const domainInput     = document.getElementById('domain-input');
 const generateBtn     = document.getElementById('generate-btn');
@@ -40,6 +41,15 @@ const ringProgress     = document.getElementById('ring-progress');
 const strengthsBody    = document.getElementById('strengths-body');
 const weaknessesBody   = document.getElementById('weaknesses-body');
 const planTimeline     = document.getElementById('plan-timeline');
+
+// Literature Review card elements
+const litSummary = document.getElementById("literature-summary");
+const litExistingWork = document.getElementById("existing-work");
+const litLimitations = document.getElementById("limitations");
+
+
+// Future Directions card element
+const futureList = document.getElementById("future-directions");
 
 // SVG score ring: circumference = 2π × r = 2π × 40 ≈ 251.33
 const RING_CIRCUMFERENCE = 2 * Math.PI * 40;
@@ -206,25 +216,36 @@ function markAllAgentsDone() {
 
 
 /* ── 7. Render Results ───────────────────────────────────── */
-
 function renderResults(data) {
-  // — Domain tag
-  resultsDomainTag.textContent = data.domain;
+  console.log("FULL RESPONSE:", data);
 
-  // — Project idea title
+  // Header
+  resultsDomainTag.textContent = data.domain;
   ideaTitle.textContent = data.idea;
 
-  // — Score (ring animation + counter)
+  // Score
   const score = Math.min(10, Math.max(0, Number(data.score)));
   animateScoreRing(score);
   animateScoreCounter(score);
   applyScoreBadge(score);
 
-  // — Strengths & Weaknesses
+  // Strengths & Weaknesses
   strengthsBody.textContent = data.strengths;
   weaknessesBody.textContent = data.weaknesses;
 
-  // — Implementation plan steps
+  // Literature Review
+  renderLiteratureReview(
+    data.literature_summary,
+    data.existing_work,
+    data.limitations
+  );
+
+  // Future Directions
+  renderFutureDirections(
+    data.future_directions
+  );
+
+  // Plan
   renderPlan(data.plan);
 }
 
@@ -338,6 +359,71 @@ function renderPlan(steps) {
       }, 150 + i * 90);
     });
   });
+}
+
+
+/* ── 9b. Literature Review ───────────────────────────────────
+   Parameters come directly from the backend response object:
+     summary  → data.literature_summary  (string)
+     existing → data.existing_work       (array of strings)
+     limits   → data.limitations         (array of strings)
+
+   THE BUG EXPLANATION
+   ───────────────────
+   If you ever write:
+     const { existingWork, limitations } = data;   ← WRONG — undefined
+     data.existingWork                              ← WRONG — undefined
+   The backend sends snake_case keys. JavaScript destructuring to camelCase
+   silently produces undefined without throwing. Always use:
+     data.existing_work
+     data.limitations
+     data.literature_summary
+   ─────────────────────────────────────────────────────────── */
+
+function renderLiteratureReview(summary, existing, limitations) {
+  // — Summary paragraph
+  litSummary.textContent = summary || '';
+
+  // — Existing Research list  (data.existing_work → array)
+  litExistingWork.innerHTML = '';
+  if (Array.isArray(existing)) {
+    existing.forEach((item, i) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      li.style.animationDelay = `${i * 60}ms`;
+      litExistingWork.appendChild(li);
+    });
+  }
+
+  // — Current Limitations list  (data.limitations → array)
+  litLimitations.innerHTML = '';
+  if (Array.isArray(limitations)) {
+    limitations.forEach((item, i) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      li.style.animationDelay = `${i * 60}ms`;
+      litLimitations.appendChild(li);
+    });
+  }
+}
+
+
+/* ── 9c. Future Directions ───────────────────────────────────
+   Parameter comes directly from the backend response object:
+     directions → data.future_directions  (array of strings)
+   ─────────────────────────────────────────────────────────── */
+
+function renderFutureDirections(directions) {
+  futureList.innerHTML = '';
+
+  if (Array.isArray(directions)) {
+    directions.forEach((item, i) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      li.style.animationDelay = `${i * 70}ms`;
+      futureList.appendChild(li);
+    });
+  }
 }
 
 

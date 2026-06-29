@@ -709,6 +709,108 @@ main {
   transition: width 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── 16b. Literature Review Card (full width) ────────────── */
+.card-literature {
+  grid-column: 1 / -1;
+  background: linear-gradient(130deg, #FFFFFF 55%, #EFF6FF 100%);
+}
+
+/* Sub-sections inside the lit review card */
+.lit-section {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.lit-section--last {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* Mini label above each sub-section — lighter than .card-eyebrow */
+.lit-section-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+
+.lit-summary {
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.70;
+}
+
+/* Shared bullet-list style for existing_work and limitations */
+.lit-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lit-list li {
+  font-size: 14.5px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  padding-left: 18px;
+  position: relative;
+  animation: slideInLeft 0.35s ease both;
+}
+
+/* Default bullet — uses the accent colour */
+.lit-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Amber bullet variant — for limitations list */
+.lit-list--amber li::before {
+  color: var(--amber);
+}
+
+/* ── 16c. Future Directions Card (full width) ─────────────── */
+.card-future {
+  grid-column: 1 / -1;
+  background: linear-gradient(130deg, #FFFFFF 55%, #F0FDF4 100%);
+}
+
+.future-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.future-list li {
+  font-size: 14.5px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  padding-left: 20px;
+  position: relative;
+  animation: slideInLeft 0.35s ease both;
+}
+
+.future-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--green);
+  font-weight: 600;
+}
+
 /* ── 17. Footer ───────────────────────────────────────────── */
 .footer {
   border-top: 1px solid var(--border);
@@ -778,7 +880,9 @@ main {
   /* Remove explicit col spans — not needed in 1-col grid */
   .card-idea,
   .card-weaknesses,
-  .card-plan {
+  .card-plan,
+  .card-literature,
+  .card-future {
     grid-column: 1;
   }
 

@@ -41,14 +41,22 @@ def health():
 def run_research(request: ProjectRequest):
 
     result = research_graph.invoke(
-        {
-            "domain": request.domain,
-            "idea": "",
-            "score": 0,
-            "strengths": "",
-            "weaknesses": "",
-            "plan": []
-        }
+    {
+        "domain": request.domain,
+
+        "idea": "",
+
+        "literature_summary": "",
+        "existing_work": [],
+        "limitations": [],
+
+        "score": 0,
+
+        "strengths": "",
+        "weaknesses": "",
+
+        "plan": []
+    }
     )
 
     return result
